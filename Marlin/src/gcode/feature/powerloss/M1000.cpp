@@ -56,10 +56,12 @@ inline void plr_error(PGM_P const prefix) {
  *   - With 'S' go to the Resume/Cancel menu
  *   - With no parameters, run recovery commands
  */
-void GcodeSuite::M1000() {
-
-  if (recovery.valid()) {
-    if (parser.seen_test('S')) {
+void GcodeSuite::M1000()
+{
+  if (recovery.valid())
+  {
+    if (parser.seen_test('S'))
+    {
       #if HAS_LCD_MENU
         ui.goto_screen(menu_job_recovery);
       #elif ENABLED(DWIN_CREALITY_LCD)
@@ -70,7 +72,8 @@ void GcodeSuite::M1000() {
         SERIAL_ECHO_MSG("Resume requires LCD.");
       #endif
     }
-    else if (parser.seen_test('C')) {
+    else if (parser.seen_test('C'))
+    {
       #if HAS_LCD_MENU
         lcd_power_loss_recovery_cancel();
       #else
@@ -79,11 +82,14 @@ void GcodeSuite::M1000() {
       TERN_(EXTENSIBLE_UI, ExtUI::onPrintTimerStopped());
     }
     else
+    {
       recovery.resume();
+    }
   }
   else
+  {
     plr_error(recovery.info.valid_head ? PSTR("No") : PSTR("Invalid"));
-
+  }
 }
 
 #endif // POWER_LOSS_RECOVERY
